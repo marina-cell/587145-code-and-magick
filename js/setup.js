@@ -110,7 +110,7 @@ var onPopupEscPress = function (evt) {
 };
 
 var openPopup = function () {
-  setupWindow.style = '';
+  setupWindow.style = 'initial';
   setupWindow.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress, true);
 };
