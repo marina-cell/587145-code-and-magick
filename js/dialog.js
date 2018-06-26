@@ -4,7 +4,42 @@
 
   var setupDialogWindow = document.querySelector('.setup');
   var dialogHandler = setupDialogWindow.querySelector('.upload');
+  var setupOpenButton = document.querySelector('.setup-open');
+  var setupCloseButton = setupDialogWindow.querySelector('.setup-close');
 
+  // Открытие и закрытие окна диалога
+  var onPopupEscPress = function (evt) {
+    window.util.isEscEvent(evt, closePopup);
+  };
+
+  var openPopup = function () {
+    setupDialogWindow.style = '';
+    setupDialogWindow.classList.remove('hidden');
+    document.addEventListener('keydown', onPopupEscPress, true);
+  };
+
+  var closePopup = function () {
+    setupDialogWindow.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
+  };
+
+  setupOpenButton.addEventListener('click', function () {
+    openPopup();
+  });
+
+  setupOpenButton.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, openPopup);
+  });
+
+  setupCloseButton.addEventListener('click', function () {
+    closePopup();
+  });
+
+  setupCloseButton.addEventListener('keydown', function (evt) {
+    window.util.isEnterEvent(evt, closePopup);
+  });
+
+  // Перемещение окна диалога
   dialogHandler.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
