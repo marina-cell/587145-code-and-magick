@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var OK_STATUS = 200;
+  var SHOW_ERROR_TIMEOUT = 3000; // 3s
+  var XHR_TIMEOUT = 10000; // 10s
+
   window.backend = {
     load: function (onLoad, onError) {
       var URL = 'https://js.dump.academy/code-and-magick/data';
@@ -8,7 +12,7 @@
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
+        if (xhr.status === OK_STATUS) {
           onLoad(xhr.response);
         } else {
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -27,7 +31,7 @@
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
+        if (xhr.status === OK_STATUS) {
           onLoad(xhr.response);
         } else {
           onError('Статус ответа: ' + xhr.status + ' ' + xhr.statusText);
@@ -37,12 +41,11 @@
         onError('Истек таймаут ответа от сервера: ' + xhr.timeout + ' мс');
       });
 
+      xhr.timeout = XHR_TIMEOUT;
       xhr.open('POST', URL);
       xhr.send(data);
     },
     errorHandler: function (errorMessage) {
-      var TIMEOUT = 3000; // s
-
       var node = document.createElement('div');
 
       node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: pink; color: red;';
@@ -55,7 +58,7 @@
       document.body.insertAdjacentElement('afterbegin', node);
       setTimeout(function () {
         document.body.removeChild(node);
-      }, TIMEOUT);
+      }, SHOW_ERROR_TIMEOUT);
     }
   };
 })();
