@@ -6,6 +6,7 @@
   var dialogHandler = setupDialogWindow.querySelector('.upload');
   var setupOpenButton = document.querySelector('.setup-open');
   var setupCloseButton = setupDialogWindow.querySelector('.setup-close');
+  var form = setupDialogWindow.querySelector('.setup-wizard-form');
 
   // Открытие и закрытие окна диалога
   var onPopupEscPress = function (evt) {
@@ -85,5 +86,12 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      setupDialogWindow.classList.add('hidden');
+    }, window.backend.errorHandler);
+    evt.preventDefault();
   });
 })();
