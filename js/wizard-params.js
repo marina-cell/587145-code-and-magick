@@ -19,5 +19,7 @@
     getRandomFireballColor: function () {
       return window.util.getRandomValueFromArray(FIREBALL_COLORS);
     },
+    onEyesChange: function () {},
+    onCoatChange: function () {}
   };
 })();
